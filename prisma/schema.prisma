@@ -1,0 +1,19 @@
+generator photon {
+  provider = "photonjs"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:db.sqlite3"
+  // provider = "postgresql"
+  // url      = "postgresql://postgres:postgres@localhost:5432/nima?schema=nima"
+}
+
+model Post {
+  id        String   @default(cuid()) @id
+  createdAt DateTime @default(now())
+  title     String?
+  content   String
+  image     String?
+  thread    Post[]
+}
