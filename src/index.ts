@@ -7,7 +7,6 @@ async function main() {
   let app = express();
 
   app.use(json());
-  app.get("/", (req, res) => res.send("TEST"));
 
   app.get("/posts", async (_, res) => {
     let posts = await photon.posts.findMany();
@@ -16,15 +15,30 @@ async function main() {
     res.json(posts);
   });
 
-  app.post("/posts", async (req, res) => {
-    let post = {
-      content: req.body.content,
-      image: req.body.image ? req.body.image : undefined
-    };
+  app.post("/thread", async (req, res) => {
+    let thread = await photon.threads.create({ data: req.body });
 
-    let newPost = await photon.posts.create({ data: post });
+    res.json(thread);
+  });
 
-    res.json(newPost);
+  app.get("/thread/:id", async (req, res) => {
+    let thread = await photon.threads.findOne({
+      where: { id: req.params.id },
+      include: { posts: true }
+    });
+
+    res.json(thread);
+  });
+
+  app.post("/thread/:id", async (req, res) => {
+    let post = await photon.posts.create({
+      data: {
+        ...req.body,
+        thread: { connect: { id: req.params.id } }
+      }
+    });
+
+    res.json(post);
   });
 
   app.listen(4000, () => console.log("Started listening on 4000"));

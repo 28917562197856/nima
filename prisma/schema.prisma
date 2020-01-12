@@ -5,15 +5,20 @@ generator photon {
 datasource db {
   provider = "sqlite"
   url      = "file:db.sqlite3"
-  // provider = "postgresql"
-  // url      = "postgresql://postgres:postgres@localhost:5432/nima?schema=nima"
+}
+
+model Thread {
+  id        String   @default(cuid()) @id
+  createdAt DateTime @default(now())
+  content   String
+  title     String?
+  image     String?
+  posts     Post[]
 }
 
 model Post {
   id        String   @default(cuid()) @id
   createdAt DateTime @default(now())
-  title     String?
-  content   String
   image     String?
-  thread    Post[]
+  content   String
 }

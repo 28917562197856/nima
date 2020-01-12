@@ -1,6 +1,19 @@
-POST http://localhost:4000/posts
+POST http://localhost:4000/thread/ck5au4dez0000jvfwkzk4pgsi
 Content-Type: application/json
 
 {
-    "content": "awawpdokawda"
+    "content": "zzzzzzzzzzzzz"
 }
+
+###
+
+POST http://localhost:4000/thread
+Content-Type: application/json
+
+{
+    "content": "azxczxcxzc"
+}
+
+###
+
+GET http://localhost:4000/thread/ck5au4dez0000jvfwkzk4pgsi
